@@ -1,50 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banana King</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banana King</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <nav class="navbar  section-content">
-      <a href="#" class="navbar-logo">
-        <h2 class="logo-text">🍌 Banana King</h2>
-      </a>
-      <ui class="nav-menu">
-        <li class="nav-item">
-          <a href="#" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">about</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Menu</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Contact</a>
-      </ui>
-    </nav>
-  </header>
-   
-  <main>
-    <section class="hero-section">
-      <div class="section-content">
-        <div class="hero-details">
-          <h2 class="title">Best Banana Chip</h2>
-          <h3 class="subtitle">Make your day great with our special banana chip</h3>
-          <p class="description">Welcome to our Banana King</p>
-          
-          <div class="buttons">
-            <a href="#" class="button order-now">Order Now</a>
-            <a href="#" class="button order-now">Content</a>
-          </div>
-        </div>
-        <div class="hero-image-wrapper">
-          <img src="image" alt="hero" class="hero-image">
-        </div>
-      </div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Banana <span>King</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+    <div class="content">
+        <h1>Selamat Datang di Banana King</h1>
+        <p>Nikmati Keripik Pisang Premium dengan Cita Rasa Lezat & Renyah Setiap Hari</p>
+        <a href="#menu" class="btn">Lihat Menu</a>
+    </div>
     </section>
-  </main>
+
+    <section id="menu" class="menu">
+    <h2>Best Seller Banana Chip</h2>
+    <div class="menu-items">
+        <div class="item">
+            <img src="banana-original.jpg" alt="Original Banana Chip">
+            <h3>Original</h3>
+            <p>Keripik pisang dengan rasa klasik yang renyah dan gurih.</p>
+        </div>
+        <div class="item">
+            <img src="banana-choco.jpg" alt="Chocolate Banana Chip">
+            <h3>Chocolate</h3>
+            <p>Perpaduan pisang renyah dengan cokelat premium yang menggoda.</p>
+        </div>
+        <div class="item">
+            <img src="banana-cheese.jpg" alt="Cheese Banana Chip">
+            <h3>Cheese</h3>
+            <p>Keripik pisang dengan taburan keju spesial yang nikmat.</p>
+        </div>
+        <div class="item">
+            <img src="banana-balado.jpg" alt="Balado Banana Chip">
+            <h3>Balado</h3>
+            <p>Sensasi pedas manis khas balado, cocok untuk pecinta rasa unik.</p>
+        </div>
+    </div>
+    </section>
+
+    <section id="contact" class="contact">
+    <h2>Hubungi Kami</h2>
+    <p>Kami sangat menghargai kritik dan saran Anda untuk meningkatkan kualitas produk kami.</p>
+    <form class="contact-form">
+        <input type="text" name="nama" placeholder="Nama Anda" required>
+        <input type="email" name="email" placeholder="Email Anda" required>
+        <textarea name="pesan" rows="5" placeholder="Tulis saran atau pesan Anda..." required></textarea>
+        <button type="submit">Kirim Saran</button>
+    </form>
+    </section>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
