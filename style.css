@@ -55,8 +55,17 @@ img {
     width: 100%;
 }
 
+.section-content {
+    margin: 0 auto;
+    padding: 0 20px;
+    max-width: var(--site-max-width);
+}
+
 /* navbar */
 header {
+    position: fixed;
+    width: 100;
+    z-index: 5;
     background: var(--primary-color);
 }
 
@@ -90,4 +99,17 @@ header .navbar {
 .navbar .nav-menu .nav-link:hover {
     color: var(--primary-color);
     background: var(--secondary-color);
+}
+
+.hero-section {
+    min-height: 100vh;
+     background: var(--primary-color);
+}
+
+.hero-section .section-content {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    justify-content: space-between;
+    color: var(--white-color)
 }
