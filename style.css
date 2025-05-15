@@ -1,0 +1,6 @@
+/* Impoerting google */
+@import url('https://fonts.googleapis.com/css2?family=Miniver&family=Poppins:ital,wght@0,400;1,400;1,500;1,600&display=swap');
+
+* {
+    font-family: "Poppins", sans-serif;
+}
