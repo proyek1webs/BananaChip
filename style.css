@@ -38,7 +38,7 @@ header {
 }
 
 .logo span {
-    color: #eab543;
+    color: #FF7F00;
 }
 
 .navbar {
@@ -50,9 +50,9 @@ header {
     width: 100%;
     top: 0;
     left: 0;
-    background-color: #e0e0e0; /* Warna abu-abu solid */
+    background-color: #ffeb3b; /* Warna abu-abu solid */
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    border-bottom: 2px solid #ccc;  /* Border bawah abu-abu tipis */
+    border-bottom: 2px solid #ffeb3b;  /* Border bawah abu-abu tipis */
 }
 
 .nav-links {
@@ -74,8 +74,6 @@ header {
 .nav-links a:hover {
     color: #eab543;
 }
-
-
 
 .about-page {
     padding: 80px 20px;
@@ -117,7 +115,7 @@ header {
 
 .hero {
     height: 100vh;
-    background: url('hero-banana.jpg') center/cover no-repeat;
+    background: url('BackgroundBanana.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
