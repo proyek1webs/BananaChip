@@ -440,11 +440,12 @@ section {
 
 .map-container {
     position: relative;
-    width: 50%;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 15px;
     overflow: hidden;
-    margin-top: 20px;
+    padding-bottom: 56.25%; /* 16:9 aspect ratio */
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
