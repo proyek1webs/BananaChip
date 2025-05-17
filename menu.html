@@ -24,68 +24,167 @@
     <section id="menu" class="menu-page">
         <h2>Menu Banana Chip</h2>
         <div class="menu-items">
+
+            <!-- Item Template -->
             <div class="item">
                 <img src="banana-original.jpg" alt="Original">
                 <h3>Original</h3>
                 <p>Rasa pisang asli yang renyah dan gurih.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Original%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 15.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Original" data-harga="15000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
                 <img src="banana-choco.jpg" alt="Chocolate">
                 <h3>Chocolate</h3>
                 <p>Pisang renyah dilapisi cokelat premium yang menggoda.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Chocolate%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 17.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Chocolate" data-harga="17000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Matcha.jpg" alt="Matcha">
+                <img src="banana-matcha.jpg" alt="Matcha">
                 <h3>Matcha</h3>
                 <p>Pisang renyah dengan aroma matcha yang menyegarkan.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Matcha%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 18.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Matcha" data-harga="18000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
                 <img src="banana-balado.jpg" alt="Balado">
                 <h3>Balado</h3>
                 <p>Sensasi pedas manis khas balado yang unik.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Balado%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 18.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Balado" data-harga="18000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Redvelvet.jpg" alt="Redvelvet">
+                <img src="banana-redvelvet.jpg" alt="Redvelvet">
                 <h3>Redvelvet</h3>
                 <p>Pisang crispy dengan rasa redvelvet yang mewah.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Redvelvet%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 20.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Redvelvet" data-harga="20000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
                 <img src="banana-barbeque.jpg" alt="Barbeque">
                 <h3>Barbeque</h3>
                 <p>Rasa BBQ smoky yang bikin ketagihan.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Barbeque%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 18.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Barbeque" data-harga="18000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Greentea.jpg" alt="Greentea">
+                <img src="banana-greentea.jpg" alt="Greentea">
                 <h3>Greentea</h3>
                 <p>Pisang renyah dengan aroma green tea yang nikmat.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Greentea%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 18.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Greentea" data-harga="18000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Creamy.jpg" alt="Creamy Milk">
+                <img src="banana-creamy.jpg" alt="Creamy Milk">
                 <h3>Creamy Milk</h3>
                 <p>Perpaduan rasa susu creamy yang lembut dan manis.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Creamy%20Milk%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 20.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Creamy Milk" data-harga="20000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Tiramishu.jpg" alt="Tiramishu">
+                <img src="banana-tiramishu.jpg" alt="Tiramishu">
                 <h3>Tiramishu</h3>
                 <p>Perpaduan pisang crispy dengan aroma tiramishu yang nikmat.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Tiramishu%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 20.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Tiramishu" data-harga="20000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
             <div class="item">
-                <img src="banana-Vanilla.jpg" alt="Vanilla">
+                <img src="banana-vanilla.jpg" alt="Vanilla">
                 <h3>Vanilla</h3>
                 <p>Pisang crispy dengan aroma vanilla yang lembut.</p>
-                <a href="https://wa.me/6282122339125?text=Halo%20Banana%20King%2C%20saya%20mau%20pesan%20Banana%20Chip%20Vanilla%0ANama%3A%20%0AAlamat%3A%20%0AJumlah%3A%20" class="btn-beli" target="_blank">Beli Sekarang</a>
+                <p><strong>Harga:</strong> Rp 15.000</p>
+                <div class="quantity-control">
+                    <button onclick="kurangi(this)">-</button>
+                    <input type="number" value="0" min="0" data-nama="Vanilla" data-harga="15000">
+                    <button onclick="tambah(this)">+</button>
+                </div>
             </div>
+
+        </div>
+
+        <div class="note-area">
+            <textarea id="note" placeholder="Catatan tambahan (opsional)..."></textarea>
+            <button id="pesan-sekarang">Pesan Sekarang via WhatsApp</button>
         </div>
     </section>
+
+    <script>
+    function tambah(el){
+        var input = el.parentNode.querySelector('input');
+        input.value = parseInt(input.value) + 1;
+    }
+
+    function kurangi(el){
+        var input = el.parentNode.querySelector('input');
+        if(parseInt(input.value) > 0){
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+
+    document.getElementById('pesan-sekarang').addEventListener('click', function(){
+        var inputs = document.querySelectorAll('.menu-items input');
+        var pesan = "Halo Banana King%0ASaya ingin memesan:%0A";
+        var adaPesanan = false;
+        inputs.forEach(function(input){
+            var jumlah = parseInt(input.value);
+            if(jumlah > 0){
+                adaPesanan = true;
+                var nama = input.getAttribute('data-nama');
+                var harga = parseInt(input.getAttribute('data-harga'));
+                var total = jumlah * harga;
+                pesan += "- " + nama + " (" + jumlah + " x Rp " + harga + ") = Rp " + total + "%0A";
+            }
+        });
+
+        var note = document.getElementById('note').value;
+        if(note){
+            pesan += "%0ANote: " + encodeURIComponent(note);
+        }
+
+        if(adaPesanan){
+            window.open('https://wa.me/6282122339125?text=' + pesan, '_blank');
+        } else {
+            alert("Silakan pilih minimal 1 produk untuk dipesan.");
+        }
+    });
+    </script>
 
 </body>
 </html>

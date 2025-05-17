@@ -301,6 +301,73 @@ section {
     box-shadow: 0 15px 25px rgba(0,0,0,0.15);
 }
 
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.quantity-control button {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    background: #ffeb3b;
+    color: #3e2723;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease;
+}
+
+.quantity-control button:hover {
+    background: #fff176;
+    transform: scale(1.1);
+}
+
+.quantity-control input {
+    width: 60px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+
+.note-area {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.note-area textarea {
+    width: 80%;
+    height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#pesan-sekarang {
+    padding: 12px 30px;
+    background: #ffeb3b;
+    color: #3e2723;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#pesan-sekarang:hover {
+    background: #fff176;
+}
+
+
 .btn-beli {
     display: inline-block;
     margin-top: 15px;
@@ -371,7 +438,7 @@ section {
 
 .map-container {
     position: relative;
-    width: 100%;
+    width: 50%;
     padding-bottom: 56.25%; /* 16:9 aspect ratio */
     border-radius: 10px;
     overflow: hidden;
