@@ -78,7 +78,7 @@ header {
 .about-page {
     padding: 80px 20px;
     text-align: center;
-    background: url('hero-banana.jpg') center/cover no repeat;
+    background: url('Gambar/BackgroundBanana.jpg') center/cover no repeat;
     color: #3e2723;
 }
 
@@ -115,7 +115,7 @@ header {
 
 .hero {
     height: 100vh;
-    background: url('BackgroundBanana.jpg') center/cover no-repeat;
+    background: url('Gambar/BackgroundBanana.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
