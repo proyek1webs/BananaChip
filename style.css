@@ -484,6 +484,30 @@ section {
   transform: scale(1.1);
 }
 
+.gofood-balloon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ee4d2d; /* warna merah khas GoFood */
+  color: white;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  border-radius: 30px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+.gofood-balloon:hover {
+  transform: scale(1.1);
+}
+
 
 @media (max-width: 768px) {
     .menu-items {
