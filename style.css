@@ -1,14 +1,17 @@
+/* Reset margin, padding, dan box-sizing untuk seluruh elemen */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Style dasar body dan font */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
 }
 
+/* Header dan navbar */
 header {
     position: fixed;
     width: 100%;
@@ -19,28 +22,7 @@ header {
     transition: 0.4s;
 }
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-}
-
-.navbar.scrolled {
-    background: #111;
-    padding: 10px 50px;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: 700;
-    color: #0c0b0b;
-}
-
-.logo span {
-    color: #FF7F00;
-}
-
+/* Navbar container */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -50,20 +32,41 @@ header {
     width: 100%;
     top: 0;
     left: 0;
-    background-color: #ffeb3b; /* Warna abu-abu solid */
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    border-bottom: 2px solid #ffeb3b;  /* Border bawah abu-abu tipis */
+    background-color: #ffeb3b; /* Warna latar navbar */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* Bayangan bawah navbar */
+    border-bottom: 2px solid #ffeb3b;  /* Border bawah */
+    transition: 0.4s;
 }
 
+/* Navbar style saat di-scroll */
+.navbar.scrolled {
+    background: #111;
+    padding: 10px 50px;
+}
+
+/* Logo teks */
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0c0b0b;
+}
+
+.logo span {
+    color: #FF7F00; /* Warna highlight pada teks logo */
+}
+
+/* Navigasi link list */
 .nav-links {
     list-style: none;
     display: flex;
 }
 
+/* Jarak antar item navigasi */
 .nav-links li {
     margin-left: 30px;
 }
 
+/* Style link navigasi */
 .nav-links a {
     color: #080808;
     text-decoration: none;
@@ -71,17 +74,20 @@ header {
     transition: 0.3s;
 }
 
+/* Hover effect link navigasi */
 .nav-links a:hover {
     color: #eab543;
 }
 
+/* Halaman About - section */
 .about-page {
     padding: 80px 20px;
     text-align: center;
-    background: url('Gambar/BackgroundBanana.jpg') center/cover no repeat;
+    background: url('Gambar/BackgroundBanana.jpg') center/cover no-repeat;
     color: #3e2723;
 }
 
+/* Judul dan paragraf About */
 .about-page h2 {
     font-size: 36px;
     margin-bottom: 20px;
@@ -96,6 +102,7 @@ header {
     color: #5d4037;
 }
 
+/* Informasi tambahan About */
 .about-page .info {
     margin-top: 40px;
 }
@@ -106,6 +113,7 @@ header {
     color: #3e2723;
 }
 
+/* Container peta Google Maps di About */
 .about-page .map-container {
     margin-top: 20px;
     border: 3px solid #0a0a0a;
@@ -113,6 +121,7 @@ header {
     overflow: hidden;
 }
 
+/* Hero section - halaman utama */
 .hero {
     height: 100vh;
     background: url('Gambar/BackgroundBanana.jpg') center/cover no-repeat;
@@ -124,6 +133,7 @@ header {
     position: relative;
 }
 
+/* Overlay gelap pada Hero untuk kontras teks */
 .hero::after {
     content: "";
     position: absolute;
@@ -134,24 +144,28 @@ header {
     background: rgba(0, 0, 0, 0.4);
 }
 
+/* Konten Hero agar di atas overlay */
 .hero .content {
     position: relative;
     z-index: 2;
     max-width: 600px;
 }
 
+/* Judul utama Hero */
 .hero h1 {
     font-size: 48px;
     color: #ffeb3b;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 
+/* Paragraf di Hero */
 .hero p {
     font-size: 20px;
     margin: 20px 0;
     color: #fffde7;
 }
 
+/* Tombol umum */
 .btn {
     padding: 12px 30px;
     background: #ffeb3b;
@@ -162,63 +176,47 @@ header {
     transition: 0.3s;
 }
 
+/* Hover tombol */
 .btn:hover {
     background: #fff176;
 }
 
+/* Section umum */
 section {
     padding: 80px 20px;
     text-align: center;
 }
 
+/* Background warna untuk beberapa section */
 .about, .menu, .contact {
     background: #f4f4f4;
 }
 
-
-
+/* Item menu dengan animasi fadeInUp dan hover effect */
 .menu-items .item {
     background: #fff;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     opacity: 0;
     transform: translateY(50px);
     animation: fadeInUp 1s ease forwards;
 }
 
-.menu-items .item:nth-child(1) {
-    animation-delay: 0.2s;
-}
-.menu-items .item:nth-child(2) {
-    animation-delay: 0.4s;
-}
-.menu-items .item:nth-child(3) {
-    animation-delay: 0.6s;
-}
-.menu-items .item:nth-child(4) {
-    animation-delay: 0.8s;
-}
-.menu-items .item:nth-child(5) {
-    animation-delay: 1s;
-}
-.menu-items .item:nth-child(6) {
-    animation-delay: 1.2s;
-}
-.menu-items .item:nth-child(7) {
-    animation-delay: 0.2s;
-}
-.menu-items .item:nth-child(8) {
-    animation-delay: 0.4s;
-}
-.menu-items .item:nth-child(9) {
-    animation-delay: 0.6s;
-}
-.menu-items .item:nth-child(10) {
-    animation-delay: 0.8s;
-}
+/* Delay animasi untuk setiap item agar muncul berurutan */
+.menu-items .item:nth-child(1) { animation-delay: 0.2s; }
+.menu-items .item:nth-child(2) { animation-delay: 0.4s; }
+.menu-items .item:nth-child(3) { animation-delay: 0.6s; }
+.menu-items .item:nth-child(4) { animation-delay: 0.8s; }
+.menu-items .item:nth-child(5) { animation-delay: 1s; }
+.menu-items .item:nth-child(6) { animation-delay: 1.2s; }
+.menu-items .item:nth-child(7) { animation-delay: 0.2s; }
+.menu-items .item:nth-child(8) { animation-delay: 0.4s; }
+.menu-items .item:nth-child(9) { animation-delay: 0.6s; }
+.menu-items .item:nth-child(10) { animation-delay: 0.8s; }
 
+/* Keyframes animasi muncul ke atas */
 @keyframes fadeInUp {
     to {
         opacity: 1;
@@ -226,12 +224,13 @@ section {
     }
 }
 
+/* Hover effect item menu */
 .menu-items .item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
 }
 
-
+/* Section khusus menu */
 .menu-page {
     padding: 100px 20px 125px 20px;
     text-align: center;
@@ -239,12 +238,14 @@ section {
     color: #3e2723;
 }
 
+/* Judul menu */
 .menu-page h2 {
     font-size: 36px;
     margin-bottom: 30px;
     color: #bf9000;
 }
 
+/* Grid untuk list item menu */
 .menu-items {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -253,32 +254,28 @@ section {
     padding: 0 20px;
 }
 
+/* Responsive untuk tablet */
 @media (max-width: 1024px) {
     .menu-items {
         grid-template-columns: repeat(3, 1fr);
     }
 }
 
+/* Responsive untuk layar kecil */
 @media (max-width: 768px) {
     .menu-items {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+/* Responsive untuk layar sangat kecil */
 @media (max-width: 480px) {
     .menu-items {
         grid-template-columns: 1fr;
     }
 }
 
-.menu-items .item {
-    background: #fff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
+/* Style gambar item menu */
 .menu-items .item img {
     width: 100%;
     height: 180px;
@@ -286,23 +283,21 @@ section {
     border-radius: 10px;
 }
 
+/* Style judul item menu */
 .menu-items .item h3 {
     margin-top: 15px;
     font-size: 20px;
     color: #bf9000;
 }
 
+/* Style paragraf item menu */
 .menu-items .item p {
     font-size: 14px;
     margin-top: 10px;
     color: #5d4037;
 }
 
-.menu-items .item:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
-}
-
+/* Kontrol jumlah item (tombol + dan -) */
 .quantity-control {
     display: flex;
     align-items: center;
@@ -311,6 +306,7 @@ section {
     gap: 10px;
 }
 
+/* Tombol tambah/kurangi */
 .quantity-control button {
     width: 35px;
     height: 35px;
@@ -324,11 +320,13 @@ section {
     transition: 0.3s ease;
 }
 
+/* Hover tombol tambah/kurangi */
 .quantity-control button:hover {
     background: #fff176;
     transform: scale(1.1);
 }
 
+/* Input jumlah */
 .quantity-control input {
     width: 60px;
     text-align: center;
@@ -338,12 +336,13 @@ section {
     padding: 5px 10px;
 }
 
-
+/* Area catatan pesan */
 .note-area {
     margin-top: 40px;
     text-align: center;
 }
 
+/* Textarea catatan pesan */
 .note-area textarea {
     width: 80%;
     height: 100px;
@@ -354,6 +353,7 @@ section {
     border: 1px solid #ddd;
 }
 
+/* Tombol pesan sekarang */
 #pesan-sekarang {
     padding: 12px 30px;
     background: #ffeb3b;
@@ -365,11 +365,12 @@ section {
     transition: 0.3s;
 }
 
+/* Hover tombol pesan sekarang */
 #pesan-sekarang:hover {
     background: #fff176;
 }
 
-
+/* Style tombol beli (jika digunakan) */
 .btn-beli {
     display: inline-block;
     margin-top: 15px;
@@ -382,10 +383,12 @@ section {
     transition: 0.3s;
 }
 
+/* Hover tombol beli */
 .btn-beli:hover {
     background: #fff176;
 }
 
+/* Section contact */
 .contact {
     background: #fff;
     padding: 80px 20px;
@@ -393,12 +396,14 @@ section {
     color: #3e2723;
 }
 
+/* Judul contact */
 .contact h2 {
     font-size: 36px;
     margin-bottom: 20px;
     color: #bf9000;
 }
 
+/* Paragraf contact */
 .contact p {
     max-width: 600px;
     margin: 0 auto 40px auto;
@@ -406,6 +411,7 @@ section {
     color: #5d4037;
 }
 
+/* Form contact */
 .contact-form {
     max-width: 500px;
     margin: 0 auto;
@@ -414,6 +420,7 @@ section {
     gap: 15px;
 }
 
+/* Input dan textarea contact */
 .contact-form input, 
 .contact-form textarea {
     width: 100%;
@@ -423,6 +430,7 @@ section {
     font-size: 16px;
 }
 
+/* Tombol submit contact */
 .contact-form button {
     padding: 12px;
     background: #ffeb3b;
@@ -434,10 +442,12 @@ section {
     transition: 0.3s;
 }
 
+/* Hover tombol submit contact */
 .contact-form button:hover {
     background: #fff176;
 }
 
+/* Container peta google maps */
 .map-container {
     position: relative;
     width: 100%;
@@ -445,10 +455,11 @@ section {
     margin: 0 auto;
     border-radius: 15px;
     overflow: hidden;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
+    padding-bottom: 56.25%; /* rasio 16:9 */
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
+/* Iframe peta */
 .map-container iframe {
     position: absolute;
     top: 0;
@@ -458,34 +469,37 @@ section {
     border: 0;
 }
 
+/* Floating tombol instagram */
 .instagram-balloon {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  background: #E1306C;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  z-index: 1000;
-  text-decoration: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #E1306C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
 }
+
+/* Hover efek instagram balloon */
 .instagram-balloon:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
+/* Ukuran icon instagram */
 .instagram-balloon svg {
-  width: 35px;
-  height: 35px;
+    width: 35px;
+    height: 35px;
 }
 
-
-
+/* Responsive untuk menu items */
 @media (max-width: 768px) {
     .menu-items {
         flex-direction: column;
