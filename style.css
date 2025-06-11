@@ -84,6 +84,7 @@ header {
     color: #eab543;
 }
 
+
 /* Halaman About - section */
 .about-page {
     padding: 80px 20px;
@@ -92,12 +93,14 @@ header {
     color: #3e2723;
 }
 
+
 /* Judul dan paragraf About */
 .about-page h2 {
     font-size: 36px;
     margin-bottom: 20px;
     color: #bf9000;
 }
+
 
 .about-page p {
     max-width: 700px;
@@ -107,16 +110,19 @@ header {
     color: #5d4037;
 }
 
+
 /* Informasi tambahan About */
 .about-page .info {
     margin-top: 40px;
 }
+
 
 .about-page .info h3 {
     font-size: 20px;
     margin-bottom: 10px;
     color: #3e2723;
 }
+
 
 /* Container peta Google Maps di About */
 .about-page .map-container {
