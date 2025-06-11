@@ -51,9 +51,11 @@ header {
     color: #0c0b0b;
 }
 
+
 .logo span {
     color: #FF7F00; /* Warna highlight pada teks logo */
 }
+
 
 /* Navigasi link list */
 .nav-links {
@@ -61,10 +63,12 @@ header {
     display: flex;
 }
 
+
 /* Jarak antar item navigasi */
 .nav-links li {
     margin-left: 30px;
 }
+
 
 /* Style link navigasi */
 .nav-links a {
@@ -73,6 +77,7 @@ header {
     font-weight: 500;
     transition: 0.3s;
 }
+
 
 /* Hover effect link navigasi */
 .nav-links a:hover {
