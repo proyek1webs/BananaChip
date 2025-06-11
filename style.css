@@ -164,12 +164,14 @@ header {
     max-width: 600px;
 }
 
+
 /* Judul utama Hero */
 .hero h1 {
     font-size: 48px;
     color: #ffeb3b;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
+
 
 /* Paragraf di Hero */
 .hero p {
