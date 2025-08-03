@@ -566,12 +566,6 @@ input[type=number] {
     resize: vertical; /* Hanya bisa di-resize secara vertikal */
 }
 
-/* Gaya untuk input file (Choose File) */
-.add-item-form input[type="file"] {
-    grid-column: 1 / -1; /* Membentang seluruh kolom */
-    padding: 10px 0; /* Padding vertikal */
-}
-
 /* Gaya tombol "Tambah Menu" */
 #btn-add-item {
     grid-column: 1 / -1; /* Membentang seluruh kolom */
@@ -820,5 +814,5 @@ input[type=number] {
     font-size: 24px;
     font-weight: 700;
     color: #0c0b0b;
-    text-decoration: none; /* Tambahkan atau pastikan kode ini ada */
+    text-decoration: none;
 }
