@@ -2,9 +2,9 @@
 // db_config.php
 
 $host = "localhost";
-$username = "root";
-$password = ""; 
-$database = "bananaking_bd";
+$username = "renzipmy_renzdata";
+$password = "renz747412"; 
+$database = "renzipmy_bananaking";
 
 // Membuat koneksi ke database
 $conn = new mysqli($host, $username, $password, $database);
