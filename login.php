@@ -46,7 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($stmt->fetch()) {
                         if (password_verify($password, $hashed_password)) {
                             // Password cocok, mulai session
-                            session_start();
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
