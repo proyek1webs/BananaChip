@@ -34,7 +34,7 @@ header {
     left: 0;
     background-color: #ffeb3b; /* Warna latar navbar */
     box-shadow: 0 3px 8px rgba(0,0,0,0.1); /* Bayangan bawah navbar */
-    border-bottom: 2px solid #ffeb3b;  /* Border bawah */
+    border-bottom: none;  /* Border bawah dihilangkan */
     transition: 0.4s;
 }
 
@@ -49,7 +49,7 @@ header {
     font-size: 24px;
     font-weight: 700;
     color: #0c0b0b;
-    text-decoration: none;
+    text-decoration: none; /* Menghilangkan garis bawah pada logo */
 }
 
 .logo span {
@@ -422,7 +422,7 @@ section {
 }
 
 /* Input dan textarea contact */
-.contact-form input,
+.contact-form input, 
 .contact-form textarea {
     width: 100%;
     padding: 15px;
@@ -564,6 +564,12 @@ input[type=number] {
     grid-column: 1 / -1; /* Membentang seluruh kolom */
     min-height: 100px; /* Tinggi minimum */
     resize: vertical; /* Hanya bisa di-resize secara vertikal */
+}
+
+/* Gaya untuk input file (Choose File) */
+.add-item-form input[type="file"] {
+    grid-column: 1 / -1; /* Membentang seluruh kolom */
+    padding: 10px 0; /* Padding vertikal */
 }
 
 /* Gaya tombol "Tambah Menu" */
@@ -771,40 +777,4 @@ input[type=number] {
 
 .nav-links a:hover {
     color: #eab543;
-}
-
-/* Styling tombol Perbarui Menu dan Batal */
-#edit-form button {
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin-top: 15px; /* Jarak atas */
-    margin-right: 10px; /* Jarak antara tombol */
-}
-
-/* Styling tombol Perbarui Menu */
-#btn-update-item {
-    background-color: #ffeb3b; /* Warna kuning terang */
-    color: #3e2723; /* Warna teks cokelat gelap */
-}
-
-#btn-update-item:hover {
-    background-color: #fdd835; /* Warna kuning lebih gelap saat hover */
-    transform: translateY(-2px);
-}
-
-/* Styling tombol Batal */
-#btn-cancel-edit {
-    background-color: #f4f4f4; /* Warna abu-abu terang */
-    color: #3e2723; /* Warna teks cokelat gelap */
-}
-
-#btn-cancel-edit:hover {
-    background-color: #e0e0e0; /* Warna abu-abu lebih gelap saat hover */
-    transform: translateY(-2px);
 }

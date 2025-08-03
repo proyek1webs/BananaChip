@@ -61,7 +61,8 @@ async function loadMenuItems() {
                 document.querySelectorAll('.btn-edit').forEach(button => {
                     button.addEventListener('click', function() {
                         const id = this.getAttribute('data-id');
-                        showEditForm(id);
+                        // Logika edit akan muncul di sini (misalnya: menampilkan form edit)
+                        alert(`Fitur edit untuk ID: ${id} akan segera ditambahkan.`);
                     });
                 });
             }
@@ -72,108 +73,7 @@ async function loadMenuItems() {
     }
 }
 
-async function showEditForm(id) {
-    try {
-        // Ambil data item berdasarkan ID
-        const response = await fetch(`get_menu_item.php?id=${id}`);
-        const item = await response.json();
-        
-        if (item) {
-            // Sembunyikan form tambah, tampilkan form edit
-            document.getElementById('add-form').style.display = 'none';
-            document.getElementById('edit-form').style.display = 'block';
-
-            // Isi form edit dengan data yang diambil
-            document.getElementById('edit-id-item').value = item.id;
-            document.getElementById('edit-nama-item').value = item.nama_item;
-            document.getElementById('edit-deskripsi').value = item.deskripsi;
-            document.getElementById('edit-harga').value = item.harga;
-            document.getElementById('edit-file-name-display').textContent = item.gambar || 'No file chosen';
-
-            const preview = document.getElementById('current-image-preview');
-            preview.innerHTML = `<img src="Gambar/${item.gambar}" alt="${item.nama_item}" style="max-width:150px; margin-top: 10px;">`;
-        }
-    } catch (error) {
-        console.error('Gagal mengambil data item untuk diedit:', error);
-        alert('Gagal memuat data item untuk diedit.');
-    }
-}
-
-document.getElementById('btn-cancel-edit').addEventListener('click', function() {
-    // Sembunyikan form edit, tampilkan form tambah
-    document.getElementById('add-form').style.display = 'block';
-    document.getElementById('edit-form').style.display = 'none';
-});
-
-// Event listener untuk tombol "Perbarui Menu"
-document.getElementById('btn-update-item').addEventListener('click', async function() {
-    const id = document.getElementById('edit-id-item').value;
-    const namaItem = document.getElementById('edit-nama-item').value;
-    const deskripsi = document.getElementById('edit-deskripsi').value;
-    const harga = document.getElementById('edit-harga').value;
-    const gambarInput = document.getElementById('edit-gambar');
-
-    if (!namaItem || !harga) {
-        alert("Nama item dan harga tidak boleh kosong!");
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append('id', id);
-    formData.append('nama_item', namaItem);
-    formData.append('deskripsi', deskripsi);
-    formData.append('harga', parseFloat(harga));
-
-    if (gambarInput.files.length > 0) {
-        formData.append('gambar', gambarInput.files[0]);
-    }
-
-    try {
-        const response = await fetch('update_menu.php', {
-            method: 'POST',
-            body: formData
-        });
-        const result = await response.json();
-
-        if (result.success) {
-            alert(result.message);
-            document.getElementById('edit-form').style.display = 'none';
-            document.getElementById('add-form').style.display = 'block';
-            loadMenuItems();
-        } else {
-            alert("Gagal memperbarui item: " + result.message);
-        }
-    } catch (error) {
-        console.error('Error saat memperbarui item menu:', error);
-        alert('Terjadi kesalahan saat mencoba memperbarui item menu.');
-    }
-});
-
-
-async function deleteMenuItem(id) {
-    if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
-        try {
-            const response = await fetch('delete_menu.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: id })
-            });
-            const result = await response.json();
-            if (result.success) {
-                alert(result.message);
-                loadMenuItems();
-            } else {
-                alert("Gagal menghapus item: " + result.message);
-            }
-        } catch (error) {
-            console.error('Error saat menghapus item menu:', error);
-            alert('Terjadi kesalahan saat menghapus item.');
-        }
-    }
-}
-
+// Panggil fungsi saat DOM selesai dimuat
 document.addEventListener('DOMContentLoaded', loadMenuItems);
 
 
@@ -209,12 +109,13 @@ document.getElementById('btn-add-item').addEventListener('click', async function
 
         if (result.success) {
             alert(result.message);
+            // Bersihkan form
             document.getElementById('add-nama-item').value = '';
             document.getElementById('add-deskripsi').value = '';
             document.getElementById('add-harga').value = '';
             gambarInput.value = '';
             document.getElementById('file-name-display').textContent = 'No file chosen';
-            loadMenuItems();
+            loadMenuItems(); // Muat ulang menu setelah penambahan
         } else {
             alert("Gagal menambah item: " + result.message);
         }
@@ -225,7 +126,7 @@ document.getElementById('btn-add-item').addEventListener('click', async function
 });
 
 
-// Fungsi tambah dan kurangi yang sudah ada
+// Fungsi tambah dan kurangi yang sudah ada dari menu.html asli
 function tambah(el){
     var input = el.parentNode.querySelector('input');
     input.value = parseInt(input.value) + 1;
@@ -270,9 +171,10 @@ document.getElementById('pesan-sekarang').addEventListener('click', function(){
 });
 
 
+// Kode untuk form kontak di index.html (jika ada, sesuaikan)
 document.addEventListener('DOMContentLoaded', function() {
     const kirimWaButton = document.getElementById('kirim-wa');
-    if (kirimWaButton) {
+    if (kirimWaButton) { // Pastikan tombol ada (hanya di index.html)
         kirimWaButton.addEventListener('click', function() {
             var nama = document.getElementById('nama').value;
             var email = document.getElementById('email').value;
