@@ -2,22 +2,21 @@
 <html lang="id">
 
 <head>
- <!-- tracker (gtag.js) -->
-<script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/gh/domyid/tracker@main/index.js"></script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9BXCQQXSWN"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9BXCQQXSWN"></script>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
 
-  gtag('config', 'G-9BXCQQXSWN');
-</script>
+        gtag('config', 'G-9BXCQQXSWN');
+    </script>
 
-<!-- Console tag -->
-<meta name="google-site-verification" content="dDAxuJTjVgIFBW1I6EarDfV_SofHhDvvz6IU0M1girw" />
+    <meta name="google-site-verification" content="dDAxuJTjVgIFBW1I6EarDfV_SofHhDvvz6IU0M1girw" />
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,141 +28,58 @@
 
     <header>
         <nav class="navbar abu">
-            <div class="logo">Banana <span>King</span></div>
+            <a href="login.php" class="logo">Banana <span>King</span></a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="menu.html" class="active">Menu</a></li>
+                <li><a href="logout.php" id="logout-link" style="display:none;">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <section id="menu" class="menu-page">
         <h2>Menu Banana King Chips</h2>
-        <div class="menu-items">
 
-            <!-- Item Template -->
-            <div class="item">
-                <img src="Gambar/banana original.png" alt="Original">
-                <h3>Original </h3>
-                <p>Rasa pisang asli yang renyah dan rasa gurih.</p>
-                <p><strong>Harga:</strong> Rp 7.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Original" data-harga="15000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/coklat.png" alt="Chocolate">
-                <h3>Chocolate </h3>
-                <p>Pisang renyah dilapisi cokelat premium yang menggoda.</p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Chocolate" data-harga="17000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Matcha.png" alt="Matcha">
-                <h3>Matcha </h3>
-                <p>Pisang renyah dengan aroma matcha yang menyegarkan.</p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Matcha" data-harga="18000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Balado.png" alt="Balado">
-                <h3>Balado </h3>
-                <p>Sensasi pedas manis khas balado yang unik.</p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Balado" data-harga="18000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Redvelvet.png" alt="Redvelvet">
-                <h3>Redvelvet </h3>
-                <p>Pisang crispy dengan rasa redvelvet yang mewah.</p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Redvelvet" data-harga="20000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Barbeque.png" alt="Barbeque">
-                <h3>Barbeque </h3>
-                <p>Rasa BBQ smoky yang khas bikin ketagihan. </p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Barbeque" data-harga="18000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Greentea.png" alt="Greentea">
-                <h3>Greentea </h3>
-                <p>Pisang renyah dengan aroma green tea yang nikmat. </p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Greentea" data-harga="18000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/strawberry.png" alt="Strawberry">
-                <h3>Strawberry </h3>
-                <p>Perpaduan rasa strawberry yang lembut dan manis. </p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Creamy Milk" data-harga="20000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Tiramishu.png" alt="Tiramishu">
-                <h3>Tiramishu </h3>
-                <p>Perpaduan pisang crispy dengan aroma tiramishu yang nikmat. </p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Tiramishu" data-harga="20000">
-                    <button onclick="tambah(this)">+</button>
-                </div>
-            </div>
-
-            <div class="item">
-                <img src="Gambar/Vanila.png" alt="Vanilla">
-                <h3>Vanilla </h3>
-                <p>Pisang crispy dengan aroma vanilla yang lembut. </p>
-                <p><strong>Harga:</strong> Rp 10.000</p>
-                <div class="quantity-control">
-                    <button onclick="kurangi(this)">-</button>
-                    <input type="number" value="0" min="0" data-nama="Vanilla" data-harga="15000">
-                    <button onclick="tambah(this)">+</button>
+        <div class="admin-controls">
+            <div class="add-item-form" id="add-form">
+                <h3>Tambah Item Menu Baru</h3>
+                <input type="text" id="add-nama-item" placeholder="Nama Item" required>
+                <textarea id="add-deskripsi" placeholder="Deskripsi"></textarea>
+                <input type="number" id="add-harga" placeholder="Harga" min="0" required>
+                
+                <div class="file-input-wrapper">
+                    <input type="file" id="add-gambar" class="hidden-file-input" required>
+                    <label for="add-gambar" class="custom-file-button">Tambahkan Foto</label>
+                    <span id="file-name-display">No file chosen</span>
                 </div>
 
+                <button id="btn-add-item">Tambah Menu</button>
             </div>
+
+            <div class="add-item-form" id="edit-form" style="display:none;">
+                <h3>Edit Item Menu</h3>
+                <input type="hidden" id="edit-id-item">
+                <input type="text" id="edit-nama-item" placeholder="Nama Item" required>
+                <textarea id="edit-deskripsi" placeholder="Deskripsi"></textarea>
+                <input type="number" id="edit-harga" placeholder="Harga" min="0" required>
+
+                <div class="file-input-wrapper">
+                    <input type="file" id="edit-gambar" class="hidden-file-input">
+                    <label for="edit-gambar" class="custom-file-button">Ganti Foto</label>
+                    <span id="edit-file-name-display">No file chosen</span>
+                </div>
+                <div id="current-image-preview"></div>
+
+                <button id="btn-update-item">Perbarui Menu</button>
+                <button id="btn-cancel-edit">Batal</button>
+            </div>
+            
+            <hr style="margin: 40px auto; width: 80%;">
         </div>
+
+        <div class="menu-items">
+            </div>
 
         <div class="note-area">
             <textarea id="note" placeholder="Catatan tambahan (opsional)..."></textarea>
@@ -171,46 +87,7 @@
         </div>
     </section>
 
-    <script>
-    function tambah(el){
-        var input = el.parentNode.querySelector('input');
-        input.value = parseInt(input.value) + 1;
-    }
-
-    function kurangi(el){
-        var input = el.parentNode.querySelector('input');
-        if(parseInt(input.value) > 0){
-            input.value = parseInt(input.value) - 1;
-        }
-    }
-
-    document.getElementById('pesan-sekarang').addEventListener('click', function(){
-        var inputs = document.querySelectorAll('.menu-items input');
-        var pesan = "Halo Banana King%0ASaya ingin memesan:%0A";
-        var adaPesanan = false;
-        inputs.forEach(function(input){
-            var jumlah = parseInt(input.value);
-            if(jumlah > 0){
-                adaPesanan = true;
-                var nama = input.getAttribute('data-nama');
-                var harga = parseInt(input.getAttribute('data-harga'));
-                var total = jumlah * harga;
-                pesan += "- " + nama + " (" + jumlah + " x Rp " + harga + ") = Rp " + total + "%0A";
-            }
-        });
-
-        var note = document.getElementById('note').value;
-        if(note){
-            pesan += "%0ANote: " + encodeURIComponent(note);
-        }
-
-        if(adaPesanan){
-            window.open('https://wa.me/6282122339125?text=' + pesan, '_blank');
-        } else {
-            alert("Silakan pilih minimal 1 produk untuk dipesan.");
-        }
-    });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>

@@ -5,13 +5,11 @@
     box-sizing: border-box;
 }
 
-
 /* Style dasar body dan font */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
 }
-
 
 /* Header dan navbar */
 header {
@@ -23,7 +21,6 @@ header {
     z-index: 999;
     transition: 0.4s;
 }
-
 
 /* Navbar container */
 .navbar {
@@ -52,13 +49,12 @@ header {
     font-size: 24px;
     font-weight: 700;
     color: #0c0b0b;
+    text-decoration: none;
 }
-
 
 .logo span {
     color: #FF7F00; /* Warna highlight pada teks logo */
 }
-
 
 /* Navigasi link list */
 .nav-links {
@@ -66,12 +62,10 @@ header {
     display: flex;
 }
 
-
 /* Jarak antar item navigasi */
 .nav-links li {
     margin-left: 30px;
 }
-
 
 /* Style link navigasi */
 .nav-links a {
@@ -81,12 +75,10 @@ header {
     transition: 0.3s;
 }
 
-
 /* Hover effect link navigasi */
 .nav-links a:hover {
     color: #eab543;
 }
-
 
 /* Halaman About - section */
 .about-page {
@@ -96,14 +88,12 @@ header {
     color: #3e2723;
 }
 
-
 /* Judul dan paragraf About */
 .about-page h2 {
     font-size: 36px;
     margin-bottom: 20px;
     color: #bf9000;
 }
-
 
 .about-page p {
     max-width: 700px;
@@ -113,19 +103,16 @@ header {
     color: #5d4037;
 }
 
-
 /* Informasi tambahan About */
 .about-page .info {
     margin-top: 40px;
 }
-
 
 .about-page .info h3 {
     font-size: 20px;
     margin-bottom: 10px;
     color: #3e2723;
 }
-
 
 /* Container peta Google Maps di About */
 .about-page .map-container {
@@ -147,7 +134,6 @@ header {
     position: relative;
 }
 
-
 /* Overlay gelap pada Hero untuk kontras teks */
 .hero::after {
     content: "";
@@ -159,7 +145,6 @@ header {
     background: rgba(0, 0, 0, 0.4);
 }
 
-
 /* Konten Hero agar di atas overlay */
 .hero .content {
     position: relative;
@@ -167,14 +152,12 @@ header {
     max-width: 600px;
 }
 
-
 /* Judul utama Hero */
 .hero h1 {
     font-size: 48px;
     color: #ffeb3b;
     text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
-
 
 /* Paragraf di Hero */
 .hero p {
@@ -439,7 +422,7 @@ section {
 }
 
 /* Input dan textarea contact */
-.contact-form input, 
+.contact-form input,
 .contact-form textarea {
     width: 100%;
     padding: 15px;
@@ -523,4 +506,358 @@ section {
         flex-direction: column;
         align-items: center;
     }
+}
+
+/* Menghilangkan spinner pada input type="number" */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Gaya baru untuk formulir "Tambah Item Menu Baru" (add-item-form) */
+.add-item-form {
+    background: #ffffff; /* Latar belakang putih untuk formulir */
+    padding: 30px;
+    border-radius: 15px; /* Sudut lebih membulat */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08); /* Bayangan yang lebih menonjol */
+    max-width: 800px; /* Batasi lebar formulir */
+    margin: 40px auto; /* Pusatkan formulir dan beri jarak */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dua kolom untuk input */
+    gap: 20px; /* Jarak antar elemen */
+    align-items: center; /* Pusatkan secara vertikal */
+}
+
+.add-item-form h3 {
+    grid-column: 1 / -1; /* Judul membentang seluruh kolom */
+    font-size: 28px;
+    color: #bf9000; /* Warna judul sesuai tema */
+    margin-bottom: 20px;
+}
+
+.add-item-form input[type="text"],
+.add-item-form input[type="number"],
+.add-item-form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0; /* Border abu-abu terang */
+    border-radius: 8px; /* Sudut input membulat */
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.add-item-form input[type="text"]:focus,
+.add-item-form input[type="number"]:focus,
+.add-item-form textarea:focus {
+    border-color: #ffc107; /* Border kuning saat fokus */
+    box-shadow: 0 0 0 3px rgba(255,193,7,0.3); /* Bayangan kuning saat fokus */
+    outline: none; /* Hilangkan outline default */
+}
+
+/* Gaya khusus untuk textarea (deskripsi) */
+.add-item-form textarea {
+    grid-column: 1 / -1; /* Membentang seluruh kolom */
+    min-height: 100px; /* Tinggi minimum */
+    resize: vertical; /* Hanya bisa di-resize secara vertikal */
+}
+
+/* Gaya untuk input file (Choose File) */
+.add-item-form input[type="file"] {
+    grid-column: 1 / -1; /* Membentang seluruh kolom */
+    padding: 10px 0; /* Padding vertikal */
+}
+
+/* Gaya tombol "Tambah Menu" */
+#btn-add-item {
+    grid-column: 1 / -1; /* Membentang seluruh kolom */
+    padding: 15px 30px;
+    background: #ffeb3b; /* Warna kuning terang */
+    color: #3e2723; /* Warna teks cokelat gelap */
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px; /* Sudut lebih membulat */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(255,235,59,0.4); /* Bayangan kuning */
+}
+
+#btn-add-item:hover {
+    background: #ffd600; /* Warna kuning lebih gelap saat hover */
+    transform: translateY(-2px); /* Sedikit naik saat hover */
+    box-shadow: 0 6px 12px rgba(255,235,59,0.6); /* Bayangan lebih besar saat hover */
+}
+
+/* Gaya untuk tombol Edit dan Delete yang dinamis (dibuat oleh JS) */
+.admin-buttons .btn-edit,
+.admin-buttons .btn-delete {
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    margin-top: 10px;
+}
+
+.admin-buttons .btn-edit {
+    background: #2196F3; /* Biru */
+    color: white;
+}
+
+.admin-buttons .btn-delete {
+    background: #F44336; /* Merah */
+    color: white;
+}
+
+.admin-buttons .btn-edit:hover,
+.admin-buttons .btn-delete:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+}
+
+/* Penyesuaian responsif untuk formulir */
+@media (max-width: 768px) {
+    .add-item-form {
+        grid-template-columns: 1fr; /* Satu kolom untuk input pada layar kecil */
+        padding: 20px;
+        margin: 20px auto;
+    }
+}
+
+/* Menyembunyikan elemen admin secara default */
+.admin-controls {
+    display: none;
+}
+
+.admin-buttons {
+    display: none;
+}
+
+/* Gaya untuk input file kustom */
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* Agar memenuhi lebar kolom grid */
+    grid-column: 1 / -1; /* Membentang seluruh kolom */
+    margin-bottom: 10px; /* Jarak bawah */
+}
+
+.hidden-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Sembunyikan input asli */
+    cursor: pointer;
+    z-index: 10; /* Pastikan di atas label */
+}
+
+.custom-file-button {
+    display: inline-block;
+    padding: 12px 15px;
+    background: #ffeb3b; /* Warna kuning */
+    color: #3e2723; /* Warna teks gelap */
+    font-weight: bold;
+    border-radius: 8px; /* Sudut membulat */
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.custom-file-button:hover {
+    background: #ffd600; /* Kuning lebih gelap saat hover */
+    transform: translateY(-1px);
+}
+
+#file-name-display {
+    display: block; /* Tampilkan di baris baru */
+    margin-top: 8px;
+    font-size: 14px;
+    color: #5d4037;
+    word-break: break-all; /* Agar nama file panjang tidak keluar batas */
+}
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa; /* Warna background halaman login */
+}
+
+.login-container {
+    background: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container .logo {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: block;
+    text-decoration: none;
+}
+
+.login-container h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.login-container p {
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.login-container .form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-container .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.login-container .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.login-container .form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.login-container .invalid-feedback {
+    color: #dc3545;
+    font-size: 14px;
+    display: block;
+    margin-top: 5px;
+}
+
+.login-container .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #3e2723; /* Warna teks cokelat gelap */
+    background-color: #ffeb3b; /* Warna kuning terang */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container .btn:hover {
+    background-color: #fdd835; /* Warna tombol saat di-hover */
+}
+
+.nav-links a {
+    color: #080808;
+    text-decoration: none; /* Menghilangkan garis bawah pada tautan */
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #eab543;
+}
+
+/* ... (Kode CSS lama Anda) ... */
+
+/* Gaya untuk input file kustom */
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    grid-column: 1 / -1;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.hidden-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.custom-file-button {
+    display: inline-block;
+    padding: 12px 15px;
+    background: #ffeb3b;
+    color: #3e2723;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.custom-file-button:hover {
+    background: #ffd600;
+    transform: translateY(-1px);
+}
+
+#file-name-display {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #5d4037;
+    word-break: break-all;
+}
+
+/* Styling tombol Perbarui Menu dan Batal */
+#edit-form button {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 15px; /* Jarak atas */
+    margin-right: 10px; /* Jarak antara tombol */
+}
+
+/* Styling tombol Perbarui Menu */
+#btn-update-item {
+    background-color: #ffeb3b; /* Warna kuning terang */
+    color: #3e2723; /* Warna teks cokelat gelap */
+}
+
+#btn-update-item:hover {
+    background-color: #fdd835; /* Warna kuning lebih gelap saat hover */
+    transform: translateY(-2px);
+}
+
+/* Styling tombol Batal */
+#btn-cancel-edit {
+    background-color: #f4f4f4; /* Warna abu-abu terang */
+    color: #3e2723; /* Warna teks cokelat gelap */
+}
+
+#btn-cancel-edit:hover {
+    background-color: #e0e0e0; /* Warna abu-abu lebih gelap saat hover */
+    transform: translateY(-2px);
 }
