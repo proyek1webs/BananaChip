@@ -108,12 +108,13 @@ document.getElementById('btn-add-item').addEventListener('click', async function
 
         if (result.success) {
             alert(result.message);
+            // Bersihkan form
             document.getElementById('add-nama-item').value = '';
             document.getElementById('add-deskripsi').value = '';
             document.getElementById('add-harga').value = '';
             gambarInput.value = '';
             document.getElementById('file-name-display').textContent = 'No file chosen';
-            loadMenuItems();
+            loadMenuItems(); // Muat ulang menu setelah penambahan
         } else {
             alert("Gagal menambah item: " + result.message);
         }
@@ -124,6 +125,7 @@ document.getElementById('btn-add-item').addEventListener('click', async function
 });
 
 
+// Fungsi tambah dan kurangi yang sudah ada dari menu.html asli
 function tambah(el){
     var input = el.parentNode.querySelector('input');
     input.value = parseInt(input.value) + 1;
@@ -168,9 +170,10 @@ document.getElementById('pesan-sekarang').addEventListener('click', function(){
 });
 
 
+// Kode untuk form kontak di index.html (jika ada, sesuaikan)
 document.addEventListener('DOMContentLoaded', function() {
     const kirimWaButton = document.getElementById('kirim-wa');
-    if (kirimWaButton) {
+    if (kirimWaButton) { // Pastikan tombol ada (hanya di index.html)
         kirimWaButton.addEventListener('click', function() {
             var nama = document.getElementById('nama').value;
             var email = document.getElementById('email').value;

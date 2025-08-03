@@ -814,3 +814,11 @@ input[type=number] {
     background-color: #e0e0e0;
     transform: translateY(-2px);
 }
+
+/* Styling untuk logo Banana King */
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0c0b0b;
+    text-decoration: none; /* Tambahkan atau pastikan kode ini ada */
+}
