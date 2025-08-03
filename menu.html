@@ -33,7 +33,7 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="menu.html" class="active">Menu</a></li>
-                <li><a href="logout.php" id="logout-link" style="display:none;">Logout</a></li>
+                <li id="logout-link" style="display:none;"><a href="logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -42,7 +42,7 @@
         <h2>Menu Banana King Chips</h2>
 
         <div class="admin-controls">
-            <div class="add-item-form" id="add-form">
+            <div class="add-item-form">
                 <h3>Tambah Item Menu Baru</h3>
                 <input type="text" id="add-nama-item" placeholder="Nama Item" required>
                 <textarea id="add-deskripsi" placeholder="Deskripsi"></textarea>
@@ -56,25 +56,6 @@
 
                 <button id="btn-add-item">Tambah Menu</button>
             </div>
-
-            <div class="add-item-form" id="edit-form" style="display:none;">
-                <h3>Edit Item Menu</h3>
-                <input type="hidden" id="edit-id-item">
-                <input type="text" id="edit-nama-item" placeholder="Nama Item" required>
-                <textarea id="edit-deskripsi" placeholder="Deskripsi"></textarea>
-                <input type="number" id="edit-harga" placeholder="Harga" min="0" required>
-
-                <div class="file-input-wrapper">
-                    <input type="file" id="edit-gambar" class="hidden-file-input">
-                    <label for="edit-gambar" class="custom-file-button">Ganti Foto</label>
-                    <span id="edit-file-name-display">No file chosen</span>
-                </div>
-                <div id="current-image-preview"></div>
-
-                <button id="btn-update-item">Perbarui Menu</button>
-                <button id="btn-cancel-edit">Batal</button>
-            </div>
-            
             <hr style="margin: 40px auto; width: 80%;">
         </div>
 
