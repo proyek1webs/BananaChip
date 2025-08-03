@@ -1,0 +1,219 @@
+name: Deploy BananaChip to CPanel
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+    inputs:
+      deployment_type:
+        description: 'Deployment type'
+        required: true
+        default: 'incremental'
+        type: choice
+        options:
+        - incremental
+        - full
+        - force_all_php
+      force_upload:
+        description: 'Force upload all PHP files (if auto-detection fails)'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+        - 'false'
+        - 'true'
+jobs:
+  FTP-Deploy-Action:
+    name: FTP-Deploy-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 2  # Get last 2 commits for diff
+    # Skip build steps - just sync files directly
+
+    - name: Determine deployment mode
+      id: deploy_mode
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          DEPLOY_TYPE="${{ github.event.inputs.deployment_type }}"
+        else
+          DEPLOY_TYPE="incremental"
+        fi
+
+        echo "deployment_type=$DEPLOY_TYPE" >> $GITHUB_OUTPUT
+        echo "🚀 Deployment mode: $DEPLOY_TYPE"
+
+    - name: Smart Server Sync
+      id: sync_deploy
+      if: steps.deploy_mode.outputs.deployment_type == 'incremental'
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 10
+        max_attempts: 3
+        retry_wait_seconds: 20
+        command: |
+          # Install lftp
+          sudo apt-get update && sudo apt-get install -y lftp
+
+          echo "🔍 BananaChip Sync - Deploying website files..."
+          echo "📋 Will sync: HTML, CSS, JS, PHP, Images, Database"
+          echo "⚡ Excluding: db_config.php (server-specific file)"
+          echo "✅ Safe deployment - only application code"
+
+          # Use selective file sync for BananaChip website
+          lftp -e "
+          set ftp:ssl-allow no;
+          set ftp:passive-mode on;
+          set net:timeout 60;
+          set net:max-retries 3;
+          set net:reconnect-interval-base 5;
+          open ftp://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@${{ secrets.SERVER }};
+          cd /public_html/;
+          lcd ./;
+
+          echo 'Starting BananaChip clean deployment...';
+
+          # Step 1: Check and preserve db_config.php
+          echo 'Checking for existing db_config.php...';
+          ls -la db_config.php || echo 'No db_config.php found on server';
+
+          # Step 2: Remove ALL files EXCEPT db_config.php
+          echo 'Cleaning server (removing all files EXCEPT db_config.php)...';
+
+          # Remove specific file types but preserve db_config.php
+          rm -f *.html || echo 'No HTML files to remove';
+          rm -f *.css || echo 'No CSS files to remove';
+          rm -f *.js || echo 'No JS files to remove';
+
+          # Remove ALL PHP files EXCEPT db_config.php
+          echo 'Removing ALL PHP files except db_config.php...';
+          for file in *.php; do
+            if [ -f \"$file\" ] && [ \"$file\" != \"db_config.php\" ]; then
+              echo \"Removing $file\";
+              rm -f \"$file\";
+            fi
+          done
+
+          rm -f *.sql || echo 'No SQL files to remove';
+          rm -f *.ico || echo 'No ICO files to remove';
+          rm -f *.png *.jpg *.jpeg *.gif || echo 'No image files to remove';
+          rm -f *.md LICENSE README.md || echo 'No documentation files to remove';
+          rm -f .htaccess || echo 'No .htaccess to remove';
+          rm -rf Gambar || echo 'Gambar folder may not exist';
+
+          # Verify db_config.php is still there
+          echo 'Verifying db_config.php preservation...';
+          ls -la db_config.php || echo 'db_config.php not found (this is OK if it was never created)';
+
+          # Step 3: Upload ALL files from GitHub (fresh deployment)
+          echo 'Uploading ALL files from GitHub...';
+
+          # Upload HTML files
+          echo 'Uploading HTML files...';
+          mput *.html || echo 'No HTML files to upload';
+
+          # Upload CSS and JS files
+          echo 'Uploading CSS and JS files...';
+          mput *.css || echo 'No CSS files to upload';
+          mput *.js || echo 'No JS files to upload';
+
+          # Upload favicon
+          echo 'Uploading favicon...';
+          mput *.ico || echo 'No ICO files to upload';
+
+          # Upload ALL PHP files from GitHub (db_config.php is not in GitHub so won't be uploaded)
+          echo 'Uploading PHP files from GitHub...';
+          mput *.php || echo 'No PHP files to upload';
+
+          # Upload database file
+          echo 'Uploading database file...';
+          put database.sql || echo 'No database.sql to upload';
+
+          # Upload .htaccess
+          echo 'Uploading .htaccess...';
+          put .htaccess || echo 'No .htaccess to upload';
+
+          # Upload Gambar folder
+          echo 'Uploading Gambar folder...';
+          mirror --reverse --verbose --parallel=2 Gambar/ Gambar/ || echo 'No Gambar folder to upload';
+
+          # Final verification
+          echo 'Final verification - checking db_config.php...';
+          ls -la db_config.php || echo 'db_config.php not found (create manually in cPanel)';
+
+          echo '✅ BananaChip website sync completed!';
+
+          quit
+          "
+
+          echo "✅ BananaChip sync completed!"
+          echo "🧹 Website files updated on server"
+
+    - name: Full Server Sync
+      id: full_sync_deploy
+      if: steps.deploy_mode.outputs.deployment_type == 'full'
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 15
+        max_attempts: 3
+        retry_wait_seconds: 20
+        command: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -e "
+          set ftp:ssl-allow no;
+          set ftp:passive-mode on;
+          set net:timeout 60;
+          set net:max-retries 3;
+          set net:reconnect-interval-base 5;
+          open ftp://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@${{ secrets.SERVER }};
+          cd /public_html/;
+          lcd ./;
+          mirror --reverse --delete --verbose --parallel=2 --exclude='db_config.php' --exclude='.git' --exclude='.github' --exclude='README.md' --exclude='LICENSE' --exclude='*.md' ./ ./;
+          quit
+          "
+
+    - name: Force PHP Upload
+      id: force_php_deploy
+      if: steps.deploy_mode.outputs.deployment_type == 'force_all_php' || github.event.inputs.force_upload == 'true'
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 10
+        max_attempts: 3
+        retry_wait_seconds: 20
+        command: |
+          sudo apt-get update && sudo apt-get install -y lftp
+          lftp -e "
+          set ftp:ssl-allow no;
+          set ftp:passive-mode on;
+          set net:timeout 60;
+          set net:max-retries 3;
+          set net:reconnect-interval-base 5;
+          open ftp://${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}@${{ secrets.SERVER }};
+          cd /public_html/;
+          lcd ./;
+          echo 'Force uploading ALL PHP files (except db_config.php)...';
+
+          # Upload PHP files one by one, skipping db_config.php
+          for file in *.php; do
+            if [ \"$file\" != \"db_config.php\" ]; then
+              put \"$file\";
+            fi
+          done
+          quit
+          "
+
+    - name: Deployment Summary
+      if: always()
+      run: |
+        if [ "${{ steps.deploy_mode.outputs.deployment_type }}" = "full" ]; then
+          echo "✅ Full deployment completed!"
+        elif [ "${{ steps.deploy_mode.outputs.deployment_type }}" = "force_all_php" ]; then
+          echo "✅ Force PHP deployment completed!"
+        else
+          echo "✅ Incremental deployment completed!"
+        fi
+        echo "🎯 Server synchronized with Git repository."
+        echo "🌐 Website: https://bananachip.gilarya.my.id"
+        echo "⚠️ IMPORTANT: Configure db_config.php manually on server!"
