@@ -601,12 +601,12 @@ input[type=number] {
 }
 
 .admin-buttons .btn-edit {
-    background: #2196F3; /* Biru */
+    background: #1303e6; /* Hijau */
     color: white;
 }
 
 .admin-buttons .btn-delete {
-    background: #F44336; /* Merah */
+    background: #eb0909; /* Oranye */
     color: white;
 }
 
