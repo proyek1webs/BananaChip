@@ -263,7 +263,7 @@ document.getElementById('pesan-sekarang').addEventListener('click', function(){
 
     if(adaPesanan){
         pesan += "%0ATotal Keseluruhan: Rp " + totalHargaKeseluruhan.toLocaleString('id-ID');
-        window.open('https://wa.me/6282122339125?text=' + pesan, '_blank');
+        window.open('https://wa.me/6285722087434?text=' + pesan, '_blank');
     } else {
         alert("Silakan pilih minimal 1 produk untuk dipesan.");
     }
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if(nama && email && pesan){
                 var text = "Halo Banana King%0ASaya ingin memberikan saran.%0ANama: " + encodeURIComponent(nama) + "%0AEmail: " + encodeURIComponent(email) + "%0APesan: " + encodeURIComponent(pesan);
-                window.open('https://wa.me/6281234567890?text=' + text, '_blank');
+                window.open('https://wa.me/6285722087434?text=' + text, '_blank');
             } else {
                 alert("Mohon isi semua kolom sebelum mengirim.");
             }
