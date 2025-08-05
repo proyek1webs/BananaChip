@@ -44,6 +44,10 @@ header {
     padding: 10px 50px;
 }
 
+.navbar .logo {
+    text-decoration: none;
+}
+
 /* Logo teks */
 .logo {
     font-size: 24px;
@@ -601,13 +605,13 @@ input[type=number] {
 }
 
 .admin-buttons .btn-edit {
-    background: #2196F3; /* Biru */
-    color: white;
+    background: #1303e6; /* Hijau */
+    color: rgb(3, 15, 242);
 }
 
 .admin-buttons .btn-delete {
-    background: #F44336; /* Merah */
-    color: white;
+    background: #eb0909; /* Oranye */
+    color: rgb(8, 4, 255);
 }
 
 .admin-buttons .btn-edit:hover,

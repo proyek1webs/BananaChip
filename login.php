@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Banana King Chips</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylephp.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body class="login-page">
