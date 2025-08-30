@@ -270,6 +270,7 @@ document.getElementById('pesan-sekarang').addEventListener('click', function(){
 });
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const kirimWaButton = document.getElementById('kirim-wa');
     if (kirimWaButton) {
