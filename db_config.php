@@ -5,7 +5,7 @@
 $host = "db.bypenbqchlorpuybmihd.supabase.co";
 $port = "5432";
 $username = "postgres";
-$password = "[B4nanaK1ng5Ch1p]"; // Ganti dengan password Supabase kamu
+$password = "B4nanaK1ng5Ch1p"; // Ganti dengan password Supabase kamu
 $database = "postgres";
 
 try {
