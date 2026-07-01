@@ -9,20 +9,20 @@ $response = array();
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
     
-    $sql = "SELECT id, nama_item, deskripsi, harga, gambar FROM menu_items WHERE id = ?";
-    if ($stmt = $conn->prepare($sql)) {
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    try {
+        $sql = "SELECT id, nama_item, deskripsi, harga, gambar FROM menu_items WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
         
-        if ($result->num_rows == 1) {
-            $response = $result->fetch_assoc();
+        $result = $stmt->fetch();
+        
+        if ($result) {
+            $response = $result;
         } else {
             http_response_code(404);
             $response['error'] = 'Item not found';
         }
-        $stmt->close();
-    } else {
+    } catch (PDOException $e) {
         http_response_code(500);
         $response['error'] = 'Database query failed';
     }
@@ -32,5 +32,5 @@ if (isset($_GET['id'])) {
 }
 
 echo json_encode($response);
-$conn->close();
+$conn = null;
 ?>

@@ -4,29 +4,24 @@
 header('Content-Type: application/json'); // Mengatur header untuk respons JSON
 include 'db_config.php'; // Memasukkan file konfigurasi database
 
-// Memeriksa koneksi yang telah dibuat di db_config.php
-if ($conn->connect_error) {
-    // Logika ini akan terpicu jika db_config.php gagal
-    die(json_encode(array("error" => "Koneksi database gagal")));
-}
-
-$sql = "SELECT id, nama_item, deskripsi, harga, gambar FROM menu_items ORDER BY id ASC";
-$result = $conn->query($sql);
-
-$menu_items = array();
-
-// Pastikan query berhasil dan ada hasil
-if ($result && $result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $menu_items[] = $row;
+try {
+    $sql = "SELECT id, nama_item, deskripsi, harga, gambar FROM menu_items ORDER BY id ASC";
+    $stmt = $conn->query($sql);
+    
+    $menu_items = array();
+    
+    if ($stmt) {
+        while($row = $stmt->fetch()) {
+            $menu_items[] = $row;
+        }
     }
-} else if (!$result) {
-    // Jika query gagal, kirimkan error
+    
+    echo json_encode($menu_items);
+} catch (PDOException $e) {
     http_response_code(500);
-    die(json_encode(array("error" => "Query gagal", "details" => $conn->error)));
+    echo json_encode(array("error" => "Query gagal", "details" => $e->getMessage()));
 }
 
-echo json_encode($menu_items); // Mengembalikan data dalam format JSON
-
-$conn->close(); // Menutup koneksi database
+// Menutup koneksi database (opsional di PDO)
+$conn = null; 
 ?>

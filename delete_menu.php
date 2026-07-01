@@ -11,35 +11,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = intval($data['id'] ?? 0);
 
     if ($id > 0) {
-        // Hapus file gambar dari server sebelum menghapus data dari database
-        $sql_select_gambar = "SELECT gambar FROM menu_items WHERE id = ?";
-        if ($stmt_select = $conn->prepare($sql_select_gambar)) {
-            $stmt_select->bind_param("i", $id);
-            $stmt_select->execute();
-            $result = $stmt_select->get_result();
-            if ($row = $result->fetch_assoc()) {
+        try {
+            // Hapus file gambar dari server sebelum menghapus data dari database
+            $sql_select_gambar = "SELECT gambar FROM menu_items WHERE id = ?";
+            $stmt_select = $conn->prepare($sql_select_gambar);
+            $stmt_select->execute([$id]);
+            $row = $stmt_select->fetch();
+            
+            if ($row) {
                 $gambar_nama_file = $row['gambar'];
                 if (!empty($gambar_nama_file) && file_exists("Gambar/" . $gambar_nama_file)) {
                     unlink("Gambar/" . $gambar_nama_file);
                 }
             }
-            $stmt_select->close();
-        }
 
-        // Hapus item dari database
-        $sql_delete = "DELETE FROM menu_items WHERE id = ?";
-        if ($stmt_delete = $conn->prepare($sql_delete)) {
-            $stmt_delete->bind_param("i", $id);
-
-            if ($stmt_delete->execute()) {
+            // Hapus item dari database
+            $sql_delete = "DELETE FROM menu_items WHERE id = ?";
+            $stmt_delete = $conn->prepare($sql_delete);
+            
+            if ($stmt_delete->execute([$id])) {
                 $response['success'] = true;
                 $response['message'] = 'Item menu berhasil dihapus.';
             } else {
-                $response['message'] = 'Error: ' . $stmt_delete->error;
+                $response['message'] = 'Gagal menghapus dari database.';
             }
-            $stmt_delete->close();
-        } else {
-            $response['message'] = 'Error: ' . $conn->error;
+        } catch (PDOException $e) {
+            $response['message'] = 'Error: ' . $e->getMessage();
         }
     } else {
         $response['message'] = 'ID item tidak valid.';
@@ -49,5 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode($response);
-$conn->close();
+$conn = null;
 ?>

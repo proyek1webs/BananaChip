@@ -31,42 +31,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Cek input
     if (empty($username_err) && empty($password_err)) {
-        $sql = "SELECT id, username, password FROM users WHERE username = ?";
-        
-        // Perbaikan di sini: ganti $mysqli menjadi $conn
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("s", $param_username);
-            $param_username = $username;
+        try {
+            $sql = "SELECT id, username, password FROM users WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute([$username]);
+            
+            $user = $stmt->fetch();
 
-            if ($stmt->execute()) {
-                $stmt->store_result();
-
-                if ($stmt->num_rows == 1) {
-                    $stmt->bind_result($id, $username, $hashed_password);
-                    if ($stmt->fetch()) {
-                        if (password_verify($password, $hashed_password)) {
-                            // Password cocok, mulai session
-                            $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
-                            $_SESSION["username"] = $username;
-                            
-                            // Arahkan ke halaman menu dengan flag admin
-                            header("location: menu.html?admin=true");
-                        } else {
-                            $password_err = "Password yang Anda masukkan tidak valid.";
-                        }
-                    }
+            if ($user) {
+                if (password_verify($password, $user['password'])) {
+                    // Password cocok, mulai session
+                    $_SESSION["loggedin"] = true;
+                    $_SESSION["id"] = $user['id'];
+                    $_SESSION["username"] = $user['username'];
+                    
+                    // Arahkan ke halaman menu dengan flag admin
+                    header("location: menu.html?admin=true");
+                    exit;
                 } else {
-                    $username_err = "Username tidak ditemukan.";
+                    $password_err = "Password yang Anda masukkan tidak valid.";
                 }
             } else {
-                echo "Ada yang salah. Silakan coba lagi nanti.";
+                $username_err = "Username tidak ditemukan.";
             }
-
-            $stmt->close();
+        } catch (PDOException $e) {
+            echo "Ada yang salah. Silakan coba lagi nanti. Error: " . $e->getMessage();
         }
     }
-    $conn->close();
+    // PDO connection closes when variable is destroyed
+    $conn = null;
 }
 ?>
 
@@ -87,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo htmlspecialchars($username); ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>
             <div class="form-group">

@@ -18,68 +18,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($id <= 0 || empty($nama_item) || $harga <= 0) {
         $response['message'] = 'ID, nama item, dan harga tidak boleh kosong, dan harga harus lebih dari 0.';
         echo json_encode($response);
-        $conn->close();
+        $conn = null;
         exit();
     }
 
-    // Dapatkan nama gambar lama untuk kasus update tanpa unggah gambar baru
-    $sql_old_image = "SELECT gambar FROM menu_items WHERE id = ?";
-    $stmt_old_image = $conn->prepare($sql_old_image);
-    $stmt_old_image->bind_param("i", $id);
-    $stmt_old_image->execute();
-    $result_old_image = $stmt_old_image->get_result();
-    $old_image_row = $result_old_image->fetch_assoc();
-    $old_gambar_nama_file = $old_image_row['gambar'] ?? '';
-    $stmt_old_image->close();
-    
-    // Tangani unggahan file baru (jika ada)
-    if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
-        $file_tmp_name = $_FILES['gambar']['tmp_name'];
-        $file_name = $_FILES['gambar']['name'];
-        $upload_dir = __DIR__ . '/Gambar/';
+    try {
+        // Dapatkan nama gambar lama untuk kasus update tanpa unggah gambar baru
+        $sql_old_image = "SELECT gambar FROM menu_items WHERE id = ?";
+        $stmt_old_image = $conn->prepare($sql_old_image);
+        $stmt_old_image->execute([$id]);
+        $old_image_row = $stmt_old_image->fetch();
+        $old_gambar_nama_file = $old_image_row['gambar'] ?? '';
+        
+        // Tangani unggahan file baru (jika ada)
+        if (isset($_FILES['gambar']) && $_FILES['gambar']['error'] === UPLOAD_ERR_OK) {
+            $file_tmp_name = $_FILES['gambar']['tmp_name'];
+            $file_name = $_FILES['gambar']['name'];
+            $upload_dir = __DIR__ . '/Gambar/';
 
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+
+            $upload_path = $upload_dir . basename($file_name);
+            $gambar_nama_file = basename($file_name);
+
+            if (!move_uploaded_file($file_tmp_name, $upload_path)) {
+                $response['message'] = 'Gagal memindahkan file gambar baru yang diunggah.';
+                echo json_encode($response);
+                $conn = null;
+                exit();
+            }
+
+            if ($old_gambar_nama_file && file_exists($upload_dir . $old_gambar_nama_file)) {
+                unlink($upload_dir . $old_gambar_nama_file);
+            }
+
+        } else {
+            $gambar_nama_file = $old_gambar_nama_file;
         }
 
-        $upload_path = $upload_dir . basename($file_name);
-        $gambar_nama_file = basename($file_name);
+        // Perbarui item di database
+        $sql_update = "UPDATE menu_items SET nama_item = ?, deskripsi = ?, harga = ?, gambar = ? WHERE id = ?";
+        $stmt_update = $conn->prepare($sql_update);
 
-        if (!move_uploaded_file($file_tmp_name, $upload_path)) {
-            $response['message'] = 'Gagal memindahkan file gambar baru yang diunggah.';
-            echo json_encode($response);
-            $conn->close();
-            exit();
-        }
-
-        if ($old_gambar_nama_file && file_exists($upload_dir . $old_gambar_nama_file)) {
-            unlink($upload_dir . $old_gambar_nama_file);
-        }
-
-    } else {
-        $gambar_nama_file = $old_gambar_nama_file;
-    }
-
-    // Perbarui item di database
-    $sql_update = "UPDATE menu_items SET nama_item = ?, deskripsi = ?, harga = ?, gambar = ? WHERE id = ?";
-    if ($stmt_update = $conn->prepare($sql_update)) {
-        $stmt_update->bind_param("ssdsi", $nama_item, $deskripsi, $harga, $gambar_nama_file, $id);
-
-        if ($stmt_update->execute()) {
+        if ($stmt_update->execute([$nama_item, $deskripsi, $harga, $gambar_nama_file, $id])) {
             $response['success'] = true;
             $response['message'] = 'Item menu berhasil diperbarui.';
         } else {
-            $response['message'] = 'Error: ' . $stmt_update->error;
+            $response['message'] = 'Gagal memperbarui database.';
         }
-        $stmt_update->close();
-    } else {
-        $response['message'] = 'Error: ' . $conn->error;
+    } catch (PDOException $e) {
+        $response['message'] = 'Error: ' . $e->getMessage();
     }
-    
 } else {
     $response['message'] = 'Metode request tidak valid.';
 }
 
 echo json_encode($response);
-$conn->close();
+$conn = null;
 ?>

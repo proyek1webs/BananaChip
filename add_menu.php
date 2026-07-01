@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!mkdir($upload_dir, 0755, true)) {
                     $response['message'] = 'Gagal membuat direktori Gambar. Periksa izin folder.';
                     echo json_encode($response);
-                    $conn->close();
+                    $conn = null;
                     exit();
                 }
             }
@@ -34,19 +34,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!move_uploaded_file($file_tmp_name, $upload_path)) {
                 $response['message'] = 'Gagal memindahkan file gambar yang diunggah. Periksa izin folder.';
                 echo json_encode($response);
-                $conn->close();
+                $conn = null;
                 exit();
             }
         } else {
             $response['message'] = 'Terjadi kesalahan saat mengunggah file gambar. Kode error: ' . $_FILES['gambar']['error'];
             echo json_encode($response);
-            $conn->close();
+            $conn = null;
             exit();
         }
     } else {
         $response['message'] = 'File gambar tidak diterima di server.';
         echo json_encode($response);
-        $conn->close();
+        $conn = null;
         exit();
     }
 
@@ -54,23 +54,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($nama_item) || $harga <= 0) {
         $response['message'] = 'Nama item dan harga tidak boleh kosong dan harga harus lebih dari 0.';
     } else {
-        // Menggunakan prepared statement untuk keamanan
-        $sql = "INSERT INTO menu_items (nama_item, deskripsi, harga, gambar) VALUES (?, ?, ?, ?)";
-        
-        if ($stmt = $conn->prepare($sql)) {
-            $stmt->bind_param("ssds", $nama_item, $deskripsi, $harga, $gambar_nama_file);
-
-            if ($stmt->execute()) {
+        try {
+            $sql = "INSERT INTO menu_items (nama_item, deskripsi, harga, gambar) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            
+            if ($stmt->execute([$nama_item, $deskripsi, $harga, $gambar_nama_file])) {
                 $response['success'] = true;
                 $response['message'] = 'Item menu berhasil ditambahkan.';
-                $response['id'] = $conn->insert_id;
+                $response['id'] = $conn->lastInsertId();
             } else {
-                $response['message'] = 'Error: ' . $stmt->error;
+                $response['message'] = 'Gagal menyimpan ke database.';
             }
-
-            $stmt->close();
-        } else {
-            $response['message'] = 'Error: ' . $conn->error;
+        } catch (PDOException $e) {
+            $response['message'] = 'Error: ' . $e->getMessage();
         }
     }
 } else {
@@ -78,5 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo json_encode($response);
-$conn->close();
+$conn = null;
 ?>

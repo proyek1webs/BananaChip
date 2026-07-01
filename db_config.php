@@ -1,22 +1,26 @@
 <?php
 // db_config.php
 
-$host = "localhost";
-$username = "root";
-$password = ""; 
-$database = "Bananaking_db";
+// URL Supabase: postgresql://postgres:[YOUR-PASSWORD]@db.bypenbqchlorpuybmihd.supabase.co:5432/postgres
+$host = "db.bypenbqchlorpuybmihd.supabase.co";
+$port = "5432";
+$username = "postgres";
+$password = "[B4nanaK1ng5Ch1p]"; // Ganti dengan password Supabase kamu
+$database = "postgres";
 
-// Membuat koneksi ke database
-$conn = new mysqli($host, $username, $password, $database);
-
-// Memeriksa koneksi
-if ($conn->connect_error) {
-    // Memberikan pesan error yang lebih jelas dan menghentikan eksekusi
-    error_log("Koneksi database gagal: " . $conn->connect_error);
-    http_response_code(500); // Mengirimkan status kode error 500
-    die(json_encode(array("error" => "Koneksi database gagal", "details" => $conn->connect_error)));
+try {
+    // Membuat koneksi PDO ke PostgreSQL
+    $dsn = "pgsql:host=$host;port=$port;dbname=$database";
+    $conn = new PDO($dsn, $username, $password);
+    
+    // Mengatur mode error PDO menjadi exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Mengatur default fetch mode menjadi associative array
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    
+} catch(PDOException $e) {
+    error_log("Koneksi database gagal: " . $e->getMessage());
+    http_response_code(500);
+    die(json_encode(array("error" => "Koneksi database gagal", "details" => $e->getMessage())));
 }
-
-// Mengatur charset menjadi UTF-8
-$conn->set_charset("utf8");
 ?>
