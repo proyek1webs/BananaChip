@@ -23,17 +23,19 @@
     <title>Menu - Banana King Chips</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Tambahkan Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
     <header>
         <nav class="navbar abu">
-            <a href="login.php" class="logo">Banana <span>King</span></a>
+            <a href="login.html" class="logo">Banana <span>King</span></a>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="menu.html" class="active">Menu</a></li>
-                <li><a href="logout.php" id="logout-link" style="display:none;">Logout</a></li>
+                <li><a href="#" id="logout-link" style="display:none;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -41,18 +43,14 @@
     <section id="menu" class="menu-page">
         <h2>Menu Banana King Chips</h2>
 
-        <div class="admin-controls">
+        <div class="admin-controls" style="display:none;">
             <div class="add-item-form" id="add-form">
                 <h3>Tambah Item Menu Baru</h3>
                 <input type="text" id="add-nama-item" placeholder="Nama Item" required>
                 <textarea id="add-deskripsi" placeholder="Deskripsi"></textarea>
                 <input type="number" id="add-harga" placeholder="Harga" min="0" required>
                 
-                <div class="file-input-wrapper">
-                    <input type="file" id="add-gambar" class="hidden-file-input" required>
-                    <label for="add-gambar" class="custom-file-button">Tambahkan Foto</label>
-                    <span id="file-name-display">No file chosen</span>
-                </div>
+                <input type="text" id="add-gambar-text" placeholder="Nama File Gambar (contoh: coklat.png)" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;">
 
                 <button id="btn-add-item">Tambah Menu</button>
             </div>
@@ -64,11 +62,7 @@
                 <textarea id="edit-deskripsi" placeholder="Deskripsi"></textarea>
                 <input type="number" id="edit-harga" placeholder="Harga" min="0" required>
 
-                <div class="file-input-wrapper">
-                    <input type="file" id="edit-gambar" class="hidden-file-input">
-                    <label for="edit-gambar" class="custom-file-button">Ganti Foto</label>
-                    <span id="edit-file-name-display">No file chosen</span>
-                </div>
+                <input type="text" id="edit-gambar-text" placeholder="Nama File Gambar (contoh: coklat.png)" required style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px;">
                 <div id="current-image-preview"></div>
 
                 <button id="btn-update-item">Perbarui Menu</button>
@@ -79,7 +73,8 @@
         </div>
 
         <div class="menu-items">
-            </div>
+            <!-- Menu items akan dimuat di sini oleh JS -->
+        </div>
 
         <div class="note-area">
             <textarea id="note" placeholder="Catatan tambahan (opsional)..."></textarea>

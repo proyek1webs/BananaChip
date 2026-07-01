@@ -1,10 +1,19 @@
-// Fungsi untuk memuat item menu dari database
+// Inisialisasi Supabase
+const supabaseUrl = 'https://bypenbqchlorpuybmihd.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ5cGVuYnFjaGxvcnB1eWJtaWhkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5MDIzMDksImV4cCI6MjA5ODQ3ODMwOX0.CNU8r-6FicLx21rHNSxzBDFx-V_AA2fhSdilT1iYnXQ';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+// Fungsi untuk mengecek status admin (apakah sudah login di localStorage)
+function checkAdminStatus() {
+    return localStorage.getItem('isAdmin') === 'true';
+}
+
+// Fungsi untuk memuat item menu dari database Supabase
 async function loadMenuItems() {
     const menuItemsContainer = document.querySelector('.menu-items');
-    menuItemsContainer.innerHTML = 'Loading menu items...';
+    if(menuItemsContainer) menuItemsContainer.innerHTML = 'Loading menu items...';
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const isAdmin = urlParams.get('admin') === 'true';
+    const isAdmin = checkAdminStatus();
 
     const adminControls = document.querySelector('.admin-controls');
     if (adminControls) {
@@ -14,27 +23,31 @@ async function loadMenuItems() {
     const logoutLink = document.getElementById('logout-link');
     if (logoutLink) {
         logoutLink.style.display = isAdmin ? 'list-item' : 'none';
+        logoutLink.href = "#";
+        logoutLink.onclick = function() {
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'index.html';
+        };
     }
 
     try {
-        const response = await fetch('get_menu.php');
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const menuItems = await response.json();
+        const { data: menuItems, error } = await supabase
+            .from('menu_items')
+            .select('*')
+            .order('id', { ascending: true });
 
-        menuItemsContainer.innerHTML = '';
+        if (error) throw error;
 
-        if (menuItems.length === 0) {
-            menuItemsContainer.innerHTML = '<p>Tidak ada item menu yang tersedia.</p>';
+        if(menuItemsContainer) menuItemsContainer.innerHTML = '';
+
+        if (!menuItems || menuItems.length === 0) {
+            if(menuItemsContainer) menuItemsContainer.innerHTML = '<p>Tidak ada item menu yang tersedia.</p>';
         } else {
             menuItems.forEach(item => {
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('item');
                 itemDiv.innerHTML = `
-                    <img src="Gambar/${item.gambar || 'placeholder.png'}" alt="${item.nama_item}">
+                    <img src="Gambar/${item.gambar || 'placeholder.png'}" alt="${item.nama_item}" onerror="this.src='https://via.placeholder.com/150'">
                     <h3>${item.nama_item}</h3>
                     <p>${item.deskripsi}</p>
                     <p><strong>Harga:</strong> Rp ${parseInt(item.harga).toLocaleString('id-ID')}</p>
@@ -48,10 +61,10 @@ async function loadMenuItems() {
                         <button class="btn-delete" data-id="${item.id}">Delete</button>
                     </div>
                 `;
-                menuItemsContainer.appendChild(itemDiv);
+                if(menuItemsContainer) menuItemsContainer.appendChild(itemDiv);
             });
             
-            if (isAdmin) {
+            if (isAdmin && menuItemsContainer) {
                 document.querySelectorAll('.btn-delete').forEach(button => {
                     button.addEventListener('click', function() {
                         const id = this.getAttribute('data-id');
@@ -68,30 +81,36 @@ async function loadMenuItems() {
         }
     } catch (error) {
         console.error('Gagal memuat item menu:', error);
-        menuItemsContainer.innerHTML = '<p>Maaf, gagal memuat menu. Silakan coba lagi nanti.</p>';
+        if(menuItemsContainer) menuItemsContainer.innerHTML = '<p>Maaf, gagal memuat menu. Pastikan koneksi internet stabil.</p>';
     }
 }
 
 async function showEditForm(id) {
     try {
-        // Ambil data item berdasarkan ID
-        const response = await fetch(`get_menu_item.php?id=${id}`);
-        const item = await response.json();
+        const { data: item, error } = await supabase
+            .from('menu_items')
+            .select('*')
+            .eq('id', id)
+            .single();
+        
+        if (error) throw error;
         
         if (item) {
-            // Sembunyikan form tambah, tampilkan form edit
-            document.getElementById('add-form').style.display = 'none';
-            document.getElementById('edit-form').style.display = 'block';
+            const addForm = document.getElementById('add-form');
+            const editForm = document.getElementById('edit-form');
+            if(addForm) addForm.style.display = 'none';
+            if(editForm) editForm.style.display = 'block';
 
-            // Isi form edit dengan data yang diambil
             document.getElementById('edit-id-item').value = item.id;
             document.getElementById('edit-nama-item').value = item.nama_item;
             document.getElementById('edit-deskripsi').value = item.deskripsi;
             document.getElementById('edit-harga').value = item.harga;
-            document.getElementById('edit-file-name-display').textContent = item.gambar || 'No file chosen';
+            
+            // Kita ubah input gambar jadi text saja untuk kemudahan tanpa backend
+            document.getElementById('edit-gambar-text').value = item.gambar || '';
 
             const preview = document.getElementById('current-image-preview');
-            preview.innerHTML = `<img src="Gambar/${item.gambar}" alt="${item.nama_item}" style="max-width:150px; margin-top: 10px;">`;
+            if(preview) preview.innerHTML = `<img src="Gambar/${item.gambar}" alt="${item.nama_item}" style="max-width:150px; margin-top: 10px;" onerror="this.src='https://via.placeholder.com/150'">`;
         }
     } catch (error) {
         console.error('Gagal mengambil data item untuk diedit:', error);
@@ -99,74 +118,64 @@ async function showEditForm(id) {
     }
 }
 
-document.getElementById('btn-cancel-edit').addEventListener('click', function() {
-    // Sembunyikan form edit, tampilkan form tambah
-    document.getElementById('add-form').style.display = 'block';
-    document.getElementById('edit-form').style.display = 'none';
-});
+const btnCancelEdit = document.getElementById('btn-cancel-edit');
+if (btnCancelEdit) {
+    btnCancelEdit.addEventListener('click', function() {
+        document.getElementById('add-form').style.display = 'block';
+        document.getElementById('edit-form').style.display = 'none';
+    });
+}
 
-// Event listener untuk tombol "Perbarui Menu"
-document.getElementById('btn-update-item').addEventListener('click', async function() {
-    const id = document.getElementById('edit-id-item').value;
-    const namaItem = document.getElementById('edit-nama-item').value;
-    const deskripsi = document.getElementById('edit-deskripsi').value;
-    const harga = document.getElementById('edit-harga').value;
-    const gambarInput = document.getElementById('edit-gambar');
+const btnUpdateItem = document.getElementById('btn-update-item');
+if (btnUpdateItem) {
+    btnUpdateItem.addEventListener('click', async function() {
+        const id = document.getElementById('edit-id-item').value;
+        const namaItem = document.getElementById('edit-nama-item').value;
+        const deskripsi = document.getElementById('edit-deskripsi').value;
+        const harga = document.getElementById('edit-harga').value;
+        const gambar = document.getElementById('edit-gambar-text').value;
 
-    if (!namaItem || !harga) {
-        alert("Nama item dan harga tidak boleh kosong!");
-        return;
-    }
+        if (!namaItem || !harga) {
+            alert("Nama item dan harga tidak boleh kosong!");
+            return;
+        }
 
-    const formData = new FormData();
-    formData.append('id', id);
-    formData.append('nama_item', namaItem);
-    formData.append('deskripsi', deskripsi);
-    formData.append('harga', parseFloat(harga));
+        try {
+            const { error } = await supabase
+                .from('menu_items')
+                .update({ 
+                    nama_item: namaItem, 
+                    deskripsi: deskripsi, 
+                    harga: parseFloat(harga), 
+                    gambar: gambar 
+                })
+                .eq('id', id);
 
-    if (gambarInput.files.length > 0) {
-        formData.append('gambar', gambarInput.files[0]);
-    }
+            if (error) throw error;
 
-    try {
-        const response = await fetch('update_menu.php', {
-            method: 'POST',
-            body: formData
-        });
-        const result = await response.json();
-
-        if (result.success) {
-            alert(result.message);
+            alert("Item berhasil diperbarui!");
             document.getElementById('edit-form').style.display = 'none';
             document.getElementById('add-form').style.display = 'block';
             loadMenuItems();
-        } else {
-            alert("Gagal memperbarui item: " + result.message);
+        } catch (error) {
+            console.error('Error saat memperbarui item menu:', error);
+            alert('Terjadi kesalahan saat mencoba memperbarui item menu.');
         }
-    } catch (error) {
-        console.error('Error saat memperbarui item menu:', error);
-        alert('Terjadi kesalahan saat mencoba memperbarui item menu.');
-    }
-});
-
+    });
+}
 
 async function deleteMenuItem(id) {
     if (confirm("Apakah Anda yakin ingin menghapus item ini?")) {
         try {
-            const response = await fetch('delete_menu.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ id: id })
-            });
-            const result = await response.json();
-            if (result.success) {
-                alert(result.message);
-                loadMenuItems();
-            } else {
-                alert("Gagal menghapus item: " + result.message);
-            }
+            const { error } = await supabase
+                .from('menu_items')
+                .delete()
+                .eq('id', id);
+
+            if (error) throw error;
+
+            alert("Item berhasil dihapus!");
+            loadMenuItems();
         } catch (error) {
             console.error('Error saat menghapus item menu:', error);
             alert('Terjadi kesalahan saat menghapus item.');
@@ -174,58 +183,44 @@ async function deleteMenuItem(id) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadMenuItems);
+const btnAddItem = document.getElementById('btn-add-item');
+if (btnAddItem) {
+    btnAddItem.addEventListener('click', async function() {
+        const namaItem = document.getElementById('add-nama-item').value;
+        const deskripsi = document.getElementById('add-deskripsi').value;
+        const harga = document.getElementById('add-harga').value;
+        const gambar = document.getElementById('add-gambar-text').value;
 
+        if (!namaItem || !harga) {
+            alert("Nama item dan harga tidak boleh kosong!");
+            return;
+        }
 
-// Fungsi untuk menambah item menu baru
-document.getElementById('btn-add-item').addEventListener('click', async function() {
-    const namaItem = document.getElementById('add-nama-item').value;
-    const deskripsi = document.getElementById('add-deskripsi').value;
-    const harga = document.getElementById('add-harga').value;
-    const gambarInput = document.getElementById('add-gambar');
-    
-    if (!gambarInput.files.length) {
-        alert("Mohon pilih file gambar.");
-        return;
-    }
+        try {
+            const { error } = await supabase
+                .from('menu_items')
+                .insert([{ 
+                    nama_item: namaItem, 
+                    deskripsi: deskripsi, 
+                    harga: parseFloat(harga), 
+                    gambar: gambar || 'placeholder.png'
+                }]);
 
-    if (!namaItem || !harga) {
-        alert("Nama item dan harga tidak boleh kosong!");
-        return;
-    }
+            if (error) throw error;
 
-    const formData = new FormData();
-    formData.append('nama_item', namaItem);
-    formData.append('deskripsi', deskripsi);
-    formData.append('harga', parseFloat(harga));
-    formData.append('gambar', gambarInput.files[0]);
-
-    try {
-        const response = await fetch('add_menu.php', {
-            method: 'POST',
-            body: formData
-        });
-        const result = await response.json();
-
-        if (result.success) {
-            alert(result.message);
+            alert("Menu berhasil ditambahkan!");
             document.getElementById('add-nama-item').value = '';
             document.getElementById('add-deskripsi').value = '';
             document.getElementById('add-harga').value = '';
-            gambarInput.value = '';
-            document.getElementById('file-name-display').textContent = 'No file chosen';
+            document.getElementById('add-gambar-text').value = '';
             loadMenuItems();
-        } else {
-            alert("Gagal menambah item: " + result.message);
+        } catch (error) {
+            console.error('Error saat menambah item menu:', error);
+            alert('Terjadi kesalahan saat mencoba menambah item menu.');
         }
-    } catch (error) {
-        console.error('Error saat menambah item menu:', error);
-        alert('Terjadi kesalahan saat mencoba menambah item menu.');
-    }
-});
+    });
+}
 
-
-// Fungsi tambah dan kurangi yang sudah ada dari menu.html asli
 function tambah(el){
     var input = el.parentNode.querySelector('input');
     input.value = parseInt(input.value) + 1;
@@ -238,40 +233,43 @@ function kurangi(el){
     }
 }
 
-document.getElementById('pesan-sekarang').addEventListener('click', function(){
-    var inputs = document.querySelectorAll('.menu-items input');
-    var pesan = "Halo Banana King%0ASaya ingin memesan:%0A";
-    var adaPesanan = false;
-    var totalHargaKeseluruhan = 0;
+const pesanSekarangBtn = document.getElementById('pesan-sekarang');
+if (pesanSekarangBtn) {
+    pesanSekarangBtn.addEventListener('click', function(){
+        var inputs = document.querySelectorAll('.menu-items input[type="number"]');
+        var pesan = "Halo Banana King%0ASaya ingin memesan:%0A";
+        var adaPesanan = false;
+        var totalHargaKeseluruhan = 0;
 
-    inputs.forEach(function(input){
-        var jumlah = parseInt(input.value);
-        if(jumlah > 0){
-            adaPesanan = true;
-            var nama = input.getAttribute('data-nama');
-            var harga = parseFloat(input.getAttribute('data-harga'));
-            var total = jumlah * harga;
-            totalHargaKeseluruhan += total;
-            pesan += "- " + nama + " (" + jumlah + " x Rp " + harga.toLocaleString('id-ID') + ") = Rp " + total.toLocaleString('id-ID') + "%0A";
+        inputs.forEach(function(input){
+            var jumlah = parseInt(input.value);
+            if(jumlah > 0){
+                adaPesanan = true;
+                var nama = input.getAttribute('data-nama');
+                var harga = parseFloat(input.getAttribute('data-harga'));
+                var total = jumlah * harga;
+                totalHargaKeseluruhan += total;
+                pesan += "- " + nama + " (" + jumlah + " x Rp " + harga.toLocaleString('id-ID') + ") = Rp " + total.toLocaleString('id-ID') + "%0A";
+            }
+        });
+
+        var note = document.getElementById('note').value;
+        if(note){
+            pesan += "%0ANote: " + encodeURIComponent(note);
+        }
+
+        if(adaPesanan){
+            pesan += "%0ATotal Keseluruhan: Rp " + totalHargaKeseluruhan.toLocaleString('id-ID');
+            window.open('https://wa.me/6285722087434?text=' + pesan, '_blank');
+        } else {
+            alert("Silakan pilih minimal 1 produk untuk dipesan.");
         }
     });
-
-    var note = document.getElementById('note').value;
-    if(note){
-        pesan += "%0ANote: " + encodeURIComponent(note);
-    }
-
-    if(adaPesanan){
-        pesan += "%0ATotal Keseluruhan: Rp " + totalHargaKeseluruhan.toLocaleString('id-ID');
-        window.open('https://wa.me/6285722087434?text=' + pesan, '_blank');
-    } else {
-        alert("Silakan pilih minimal 1 produk untuk dipesan.");
-    }
-});
-
-
+}
 
 document.addEventListener('DOMContentLoaded', function() {
+    loadMenuItems();
+
     const kirimWaButton = document.getElementById('kirim-wa');
     if (kirimWaButton) {
         kirimWaButton.addEventListener('click', function() {
